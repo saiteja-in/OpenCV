@@ -8,18 +8,25 @@ gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 corners = cv2.goodFeaturesToTrack(gray, 100, 0.1, 10)
 corners = np.int0(corners)
 
+corners_list = [tuple(corner.ravel()) for corner in corners]
+sorted_corners = sorted(corners_list, key=lambda x: x[1])
+
 # for corner in corners:
 # 	x, y = corner.ravel()
-# cv2.circle(img, (335, 40), 5, (0, 0, 255), -1)    #red
-# cv2.circle(img, (336, 377), 5, (0, 255, 255), -1)  #yellow
-# cv2.circle(img, (140, 377), 5, (0, 255, 0), -1)    #green
-# cv2.circle(img, (140, 38), 5, (255, 0, 0), -1)   #blue
-# cv2.circle(img, (42, 208), 5, (255, 105, 180), -1)   #pink
-# cv2.circle(img, (434, 208), 5, (128, 0, 128), -1)   #purple
-for corner in corners:
-    x, y = corner.ravel()
-    print("Corner coordinates: ({}, {})".format(x, y)) 
-    cv2.circle(img, (x,y), 5, (128, 0, 128), -1)
+cv2.circle(img, (335, 40), 5, (0, 0, 255), -1)    #red
+cv2.circle(img, (336, 377), 5, (0, 255, 255), -1)  #yellow
+cv2.circle(img, (140, 377), 5, (0, 255, 0), -1)    #green
+cv2.circle(img, (140, 38), 5, (255, 0, 0), -1)   #blue
+cv2.circle(img, (42, 208), 5, (255, 105, 180), -1)   #pink
+cv2.circle(img, (434, 208), 5, (128, 0, 128), -1)   #purple
+# for corner in corners:
+#     x, y = corner.ravel()
+#     cv2.circle(img, (x,y), 5, (128, 0, 128), -1)
+    # print("Corner coordinates: ({}, {})".format(x, y)) 
+
+for i, (x, y) in enumerate(sorted_corners):
+    print(f"Corner {i}: ({x}, {y})")
+    # cv2.circle(img, (x, y), 5, (255, 0, 0), -1)    
  
  
     
