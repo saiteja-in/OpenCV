@@ -15,23 +15,27 @@ for corner in corners:
 def euclidean_distance(pt1, pt2):
     return np.sqrt((pt1[0] - pt2[0])**2 + (pt1[1] - pt2[1])**2)
 
-# Iterate through each corner to find and draw a line to its nearest neighbor
+# Iterate through each corner to find and draw lines to its two nearest neighbors
 for i in range(len(corners)):
     corner1 = tuple(corners[i][0])
-    min_distance = float('inf')
-    nearest_corner = None
-    
+    distances = []
+
     for j in range(len(corners)):
         if i != j:
             corner2 = tuple(corners[j][0])
             distance = euclidean_distance(corner1, corner2)
-            if distance < min_distance:
-                min_distance = distance
-                nearest_corner = corner2
+            distances.append((distance, corner2))
     
-    if nearest_corner is not None:
-        color = tuple(map(lambda x: int(x), np.random.randint(0, 255, size=3)))
-        cv2.line(img, corner1, nearest_corner, color, 1)
+    # Sort distances and select the two nearest corners
+    distances.sort(key=lambda x: x[0])
+    nearest_corners = [distances[0][1], distances[1][1]]
+
+    # Draw lines to the two nearest corners
+    color = (0, 255, 255)  # Yellow color in BGR
+    thickness = 2  # Increased thickness
+    
+    for nearest_corner in nearest_corners:
+        cv2.line(img, corner1, nearest_corner, color, thickness)
 
 cv2.imshow('Frame', img)
 cv2.waitKey(0)
