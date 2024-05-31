@@ -1,26 +1,16 @@
 import numpy as np
 import cv2
+img=cv2.imread('assets/chessboard.png')
+img=cv2.resize(img,(0,0),fx=0.75,fy=0.75)  #fits the image to the scree, it just resizes the image doesnt crop it
+img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY) #converts the given image into gray scale]
+corners = cv2.goodFeaturesToTrack(img, 100, 0.01, 10)
+corners=np.int0(corners)
+for corner in corners:
+    x,y=corner.ravel()
+    cv2.circle(img,(x,y),5,(255,0,0),-1)
 
-cap = cv2.VideoCapture(0)
 
-while True:
-    ret, frame = cap.read()
-    width = int(cap.get(3))
-    height = int(cap.get(4))
 
-    hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
-    lower_blue = np.array([90, 50, 50])
-    upper_blue = np.array([130, 255, 255])
-
-    mask = cv2.inRange(hsv, lower_blue, upper_blue)
-
-    result = cv2.bitwise_and(frame, frame, mask=mask)
-
-    cv2.imshow('frame', result)
-    cv2.imshow('mask', mask)
-
-    if cv2.waitKey(1) == ord('q'):
-        break
-
-cap.release()
+cv2.imshow('Frame',img)
+cv2.waitKey(0)
 cv2.destroyAllWindows()
