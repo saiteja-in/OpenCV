@@ -1,8 +1,10 @@
 import cv2
-img = cv2.imread('assets/logo.png',1)
-img=cv2.resize(img,(1024,1024),fx=0.5,fy=0.5)
-img = cv2.rotate(img, cv2.ROTATE_90_CLOCKWISE)
-cv2.imwrite('assets/new_img.jpg', img)
-cv2.imshow('Image',img)
-cv2.waitKey(0)
-cv2.destroyAllWindows()
+img = cv2.imread('assets/logo.jpg',-1)
+print(img.shape[1])
+print(img.shape)#(995, 1000, 3)
+
+
+# img.shape returns the dimensions of the image in the form of a tuple (height, width). Therefore, img.shape[1] specifically refers to the width of the image.
+
+# cv2.imshow('Image', img)
+# cv2.waitKey(0)
